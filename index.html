@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Interativa de Métodos de Autenticação</title>
+    <!-- Chosen Palette: Calm Neutrals & Tech Blue -->
+    <!-- Application Structure Plan: A single-page application designed for comparative analysis. The structure uses a top navigation bar for quick access to key thematic sections: an overview, a detailed method breakdown (using tabs for clarity), an interactive security comparison chart, and code demonstrations. This structure was chosen to transform a dense academic report into an exploratory tool. Instead of a linear read, users can jump to their area of interest, compare methods side-by-side, and interact with data, enhancing comprehension and engagement. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Core principles and vulnerabilities of TOTP, SMS/Email OTPs, and Biometrics. Goal: Compare & Inform. Viz/Method: An interactive radar chart (Chart.js) and side-by-side comparison cards. Interaction: Users can toggle methods on the chart to see a visual representation of their security trade-offs. Justification: A radar chart is superior to a bar chart for comparing multiple subjects across multiple standardized metrics, providing an instant "shape" of each method's security profile.
+        - Report Info: Technical process flows (TOTP generation, SMS delivery, Biometric enrollment). Goal: Organize & Explain. Viz/Method: Diagrams built with structured HTML and Tailwind CSS (flexbox, borders). Interaction: Static visual aid. Justification: Adheres to the NO SVG/Mermaid constraint while providing clear, simplified visualizations of complex processes.
+        - Report Info: Python code examples. Goal: Inform & Demonstrate. Viz/Method: A tabbed code viewer. Interaction: Users click buttons to switch between different code snippets. Justification: Organizes code neatly without cluttering the UI, allowing users to focus on one example at a time.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 60vh;
+            max-height: 500px;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #3b82f6; /* text-blue-500 */
+        }
+        .tab-button.active {
+            border-color: #3b82f6; /* border-blue-500 */
+            color: #3b82f6; /* text-blue-500 */
+            font-weight: 600;
+        }
+        .code-button.active {
+            background-color: #3b82f6; /* bg-blue-500 */
+            color: #ffffff; /* text-white */
+        }
+        .flow-box {
+            border: 1px solid #e5e7eb; /* border-gray-200 */
+            background-color: #f9fafb; /* bg-gray-50 */
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            flex-grow: 1;
+            min-width: 120px;
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af; /* text-gray-400 */
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">Análise de Autenticação</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#overview" class="nav-link text-gray-600">Visão Geral</a>
+                <a href="#details" class="nav-link text-gray-600">Métodos</a>
+                <a href="#comparison" class="nav-link text-gray-600">Comparativo</a>
+                <a href="#code" class="nav-link text-gray-600">Códigos</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#overview" class="block py-2 text-gray-600">Visão Geral</a>
+            <a href="#details" class="block py-2 text-gray-600">Métodos</a>
+            <a href="#comparison" class="block py-2 text-gray-600">Comparativo</a>
+            <a href="#code" class="block py-2 text-gray-600">Códigos</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Section 1: Overview -->
+        <section id="overview" class="text-center mb-24">
+            <h2 class="text-4xl font-bold mb-4 text-gray-900">O Futuro da Segurança é Multi-Fator</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-12">
+                A autenticação multi-fator (MFA) protege identidades digitais exigindo múltiplas provas de identidade. Esta análise explora três pilares da MFA: o que você tem (tokens), o que você recebe (códigos por comunicação) e quem você é (biometria).
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="text-2xl font-semibold mb-2">Tokens de Software (TOTP)</h3>
+                    <p class="text-gray-600">Códigos gerados localmente no seu dispositivo, independentes de rede e altamente seguros contra interceptação.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform">
+                    <div class="text-5xl mb-4">✉️</div>
+                    <h3 class="text-2xl font-semibold mb-2">OTPs por SMS & E-mail</h3>
+                    <p class="text-gray-600">A conveniência de receber códigos onde você já está, mas com vulnerabilidades inerentes ao canal de entrega.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform">
+                     <div class="text-5xl mb-4">🤚</div>
+                    <h3 class="text-2xl font-semibold mb-2">Biometria</h3>
+                    <p class="text-gray-600">A forma de autenticação mais pessoal, usando suas características únicas como impressão digital ou geometria da mão.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Method Details -->
+        <section id="details" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-900">Métodos em Detalhe</h2>
+            <p class="text-lg text-gray-600 text-center mb-12">Explore os princípios técnicos, o funcionamento e as considerações de cada abordagem de autenticação.</p>
+            
+            <!-- Tabs Navigation -->
+            <div class="mb-8 border-b border-gray-200">
+                <nav class="flex justify-center -mb-px space-x-6">
+                    <button class="tab-button py-4 px-1 border-b-2 text-gray-500 border-transparent text-lg" data-target="totp">Tokens (TOTP)</button>
+                    <button class="tab-button py-4 px-1 border-b-2 text-gray-500 border-transparent text-lg" data-target="communication">SMS & E-mail</button>
+                    <button class="tab-button py-4 px-1 border-b-2 text-gray-500 border-transparent text-lg" data-target="biometrics">Biometria</button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="tab-content">
+                <!-- TOTP Content -->
+                <div class="tab-pane" id="totp-content">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Tokens de Software: A Força da Criptografia Local</h3>
+                    <p class="max-w-3xl mx-auto text-gray-600 mb-8 text-center">Baseado na RFC 6238, o TOTP (Time-Based One-Time Password) gera um código a partir de um segredo compartilhado e do tempo atual. Como o código nunca é transmitido, ele é imune a ataques de interceptação de rede.</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h4 class="font-semibold text-lg mb-4 text-center">Fluxo de Geração TOTP</h4>
+                        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="flow-box"><strong>1. Segredo Compartilhado (K)</strong><br><span class="text-sm text-gray-500">Chave única</span></div>
+                            <div class="flow-arrow">+</div>
+                            <div class="flow-box"><strong>2. Tempo Atual (T)</strong><br><span class="text-sm text-gray-500">Sincronizado via NTP</span></div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box"><strong>3. Função Hash (HMAC-SHA1)</strong><br><span class="text-sm text-gray-500">Combina K e T</span></div>
+                             <div class="flow-arrow">→</div>
+                            <div class="flow-box bg-blue-100 border-blue-300"><strong>4. Código OTP</strong><br><span class="text-sm text-gray-500">6 dígitos válidos por 30s</span></div>
+                        </div>
+                    </div>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                            <h4 class="font-semibold text-green-800 mb-2">Vantagens</h4>
+                            <ul class="list-disc list-inside text-green-700 space-y-1">
+                                <li>Alta resistência a ataques de repetição e interceptação.</li>
+                                <li>Funciona offline após a configuração inicial.</li>
+                                <li>Protege contra vazamento de senhas (credential stuffing).</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                            <h4 class="font-semibold text-red-800 mb-2">Vulnerabilidades</h4>
+                            <ul class="list-disc list-inside text-red-700 space-y-1">
+                                <li>A segurança depende da proteção do segredo compartilhado.</li>
+                                <li>Suscetível a phishing se o usuário for enganado.</li>
+                                <li>Pode falhar se houver dessincronização de tempo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication OTPs Content -->
+                <div class="tab-pane hidden" id="communication-content">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">OTPs por Comunicação: A Conveniência e seus Riscos</h3>
+                    <p class="max-w-3xl mx-auto text-gray-600 mb-8 text-center">Enviar códigos por SMS ou e-mail é universalmente acessível. No entanto, a segurança do método é tão forte quanto a segurança do canal de comunicação, que é externo e muitas vezes vulnerável.</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h4 class="font-semibold text-lg mb-4 text-center">Fluxo de Envio por SMS/E-mail</h4>
+                        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="flow-box"><strong>1. Servidor Gera OTP</strong><br><span class="text-sm text-gray-500">Código aleatório</span></div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box"><strong>2. Envio via Gateway</strong><br><span class="text-sm text-gray-500">Twilio (SMS) / SMTP (Email)</span></div>
+                            <div class="flow-arrow text-red-500 font-bold">⚠️</div>
+                            <div class="flow-box border-red-300 bg-red-50"><strong>3. Rede Pública</strong><br><span class="text-sm text-gray-500">Ponto de interceptação</span></div>
+                             <div class="flow-arrow">→</div>
+                            <div class="flow-box"><strong>4. Dispositivo do Usuário</strong><br><span class="text-sm text-gray-500">Recebe o código</span></div>
+                        </div>
+                    </div>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                            <h4 class="font-semibold text-green-800 mb-2">Vantagens</h4>
+                            <ul class="list-disc list-inside text-green-700 space-y-1">
+                                <li>Extremamente conveniente e familiar para os usuários.</li>
+                                <li>Não requer instalação de aplicativos adicionais.</li>
+                                <li>Ampla compatibilidade com qualquer celular ou e-mail.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                            <h4 class="font-semibold text-red-800 mb-2">Vulnerabilidades</h4>
+                            <ul class="list-disc list-inside text-red-700 space-y-1">
+                                <li>Ataques de SIM Swap (troca de chip) para SMS.</li>
+                                <li>Comprometimento da conta de e-mail.</li>
+                                <li>Interceptação de mensagens em trânsito.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biometrics Content -->
+                <div class="tab-pane hidden" id="biometrics-content">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Biometria: Você é a Chave</h3>
+                    <p class="max-w-3xl mx-auto text-gray-600 mb-8 text-center">Utilizando características únicas e imutáveis como a impressão digital ou a geometria da mão, a biometria oferece um método de autenticação rápido e inerentemente pessoal. A segurança está em armazenar o "template" (modelo matemático), não a imagem real.</p>
+                     <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h4 class="font-semibold text-lg mb-4 text-center">Fluxo de Autenticação Biométrica</h4>
+                        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="flow-box"><strong>1. Captura</strong><br><span class="text-sm text-gray-500">Scanner lê o traço</span></div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box"><strong>2. Extração de Template</strong><br><span class="text-sm text-gray-500">Criação de modelo matemático</span></div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box"><strong>3. Comparação</strong><br><span class="text-sm text-gray-500">Compara com template armazenado</span></div>
+                             <div class="flow-arrow">→</div>
+                            <div class="flow-box bg-blue-100 border-blue-300"><strong>4. Verificação</strong><br><span class="text-sm text-gray-500">Acesso concedido/negado</span></div>
+                        </div>
+                    </div>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                            <h4 class="font-semibold text-green-800 mb-2">Vantagens</h4>
+                            <ul class="list-disc list-inside text-green-700 space-y-1">
+                                <li>Extremamente difícil de falsificar ou roubar.</li>
+                                <li>Conveniente e rápido para o usuário (sem senhas).</li>
+                                <li>O fator de autenticação não pode ser esquecido.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                            <h4 class="font-semibold text-red-800 mb-2">Vulnerabilidades</h4>
+                            <ul class="list-disc list-inside text-red-700 space-y-1">
+                                <li>Se o template for roubado, não pode ser alterado.</li>
+                                <li>Preocupações com privacidade sobre o armazenamento de dados.</li>
+                                <li>Pode ter falhas de leitura (dedos molhados, etc.).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Security Comparison -->
+        <section id="comparison" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-900">Comparativo Visual de Segurança</h2>
+            <p class="text-lg text-gray-600 text-center mb-12">Nenhum método é perfeito. Use o gráfico interativo para comparar as forças e fraquezas de cada abordagem em cinco critérios essenciais. Selecione os métodos para compará-los.</p>
+            
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                 <div class="flex justify-center flex-wrap gap-4 mb-8">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" data-method="totp" checked>
+                        <span class="ml-2 text-gray-700">TOTP</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600" data-method="sms" checked>
+                        <span class="ml-2 text-gray-700">SMS</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-purple-600" data-method="email" checked>
+                        <span class="ml-2 text-gray-700">E-mail</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600" data-method="biometrics" checked>
+                        <span class="ml-2 text-gray-700">Biometria</span>
+                    </label>
+                </div>
+                <div class="chart-container">
+                    <canvas id="securityChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Code Demonstrations -->
+        <section id="code" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-900">Demonstrações de Código Python</h2>
+             <p class="text-lg text-gray-600 text-center mb-12">Veja exemplos de implementação comentados para entender como esses sistemas funcionam na prática. Clique para alternar entre os códigos.</p>
+            
+            <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+                <div class="bg-gray-700 p-3 flex space-x-2">
+                    <button class="code-button px-4 py-1 rounded text-sm bg-gray-600 text-gray-300 transition" data-code="pyotp">TOTP (pyotp)</button>
+                    <button class="code-button px-4 py-1 rounded text-sm bg-gray-600 text-gray-300 transition" data-code="twilio">SMS (Twilio)</button>
+                    <button class="code-button px-4 py-1 rounded text-sm bg-gray-600 text-gray-300 transition" data-code="smtplib">Email (smtplib)</button>
+                </div>
+                <div class="p-4 text-sm font-mono text-white overflow-x-auto">
+                    <!-- PyOTP Code -->
+                    <pre class="code-pane" id="pyotp-code">
+<span class="text-purple-400">import</span> pyotp
+<span class="text-purple-400">import</span> time
+
+<span class="text-gray-400"># 1. Gerar uma chave secreta que será compartilhada com o app do usuário.</span>
+secret_key = pyotp.random_base32()
+print(<span class="text-green-300">f"Chave Secreta: {secret_key}"</span>)
+
+<span class="text-gray-400"># 2. Inicializar o objeto TOTP com a chave secreta.</span>
+totp = pyotp.TOTP(secret_key)
+
+<span class="text-gray-400"># 3. Gerar o código atual, como visto no app autenticador.</span>
+current_otp = totp.now()
+print(<span class="text-green-300">f"OTP Atual: {current_otp}"</span>)
+
+<span class="text-gray-400"># 4. Verificar um código inserido pelo usuário.</span>
+print(<span class="text-green-300">f"\nVerificando o código {current_otp}..."</span>)
+<span class="text-purple-400">if</span> totp.verify(current_otp):
+    print(<span class="text-green-300">"Verificação bem-sucedida!"</span>)
+<span class="text-purple-400">else</span>:
+    print(<span class="text-green-300">"Falha na verificação."</span>)
+
+<span class="text-gray-400"># 5. Demonstrar a expiração do código após 30 segundos.</span>
+print(<span class="text-green-300">"\nAguardando 30s para a expiração..."</span>)
+time.sleep(30)
+print(<span class="text-green-300">f"Tentando verificar o código antigo {current_otp} novamente..."</span>)
+<span class="text-purple-400">if</span> totp.verify(current_otp):
+    print(<span class="text-green-300">"Verificação bem-sucedida (inesperado)."</span>)
+<span class="text-purple-400">else</span>:
+    print(<span class="text-green-300">"Falha na verificação (esperado)."</span>)
+</pre>
+                    <!-- Twilio Code -->
+                    <pre class="code-pane hidden" id="twilio-code">
+<span class="text-purple-400">import</span> os
+<span class="text-purple-400">from</span> twilio.rest <span class="text-purple-400">import</span> Client
+<span class="text-purple-400">import</span> random
+
+<span class="text-gray-400"># Suas credenciais da conta Twilio (use variáveis de ambiente)</span>
+account_sid = os.environ.get(<span class="text-green-300">"TWILIO_ACCOUNT_SID"</span>)
+auth_token = os.environ.get(<span class="text-green-300">"TWILIO_AUTH_TOKEN"</span>)
+client = Client(account_sid, auth_token)
+
+<span class="text-gray-400"># Gera um código OTP aleatório de 6 dígitos</span>
+otp_code = str(random.randint(100000, 999999))
+
+<span class="text-purple-400">def</span> <span class="text-yellow-300">send_sms_otp</span>(phone_number):
+    <span class="text-purple-400">try</span>:
+        message = client.messages.create(
+            body=<span class="text-green-300">f"Seu código de verificação é: {otp_code}"</span>,
+            from_=<span class="text-green-300">'+15017122661'</span>, <span class="text-gray-400"># Seu número Twilio</span>
+            to=phone_number
+        )
+        print(<span class="text-green-300">f"SMS enviado para {phone_number}. SID: {message.sid}"</span>)
+    <span class="text-purple-400">except</span> Exception <span class="text-purple-400">as</span> e:
+        print(<span class="text-green-300">f"Erro ao enviar SMS: {e}"</span>)
+
+<span class="text-gray-400"># Exemplo de uso</span>
+send_sms_otp(<span class="text-green-300">'+5511999999999'</span>) <span class="text-gray-400"># Substitua pelo número do destinatário</span>
+</pre>
+                    <!-- smtplib Code -->
+                    <pre class="code-pane hidden" id="smtplib-code">
+<span class="text-purple-400">import</span> smtplib, ssl
+<span class="text-purple-400">from</span> email.mime.text <span class="text-purple-400">import</span> MIMEText
+<span class="text-purple-400">import</span> random
+
+<span class="text-gray-400"># Gera um código OTP aleatório</span>
+otp_code = str(random.randint(100000, 999999))
+
+<span class="text-gray-400"># Configurações do servidor de e-mail</span>
+smtp_server = <span class="text-green-300">"smtp.gmail.com"</span>
+port = 587
+sender_email = <span class="text-green-300">"seu_email@gmail.com"</span>
+password = <span class="text-green-300">"sua_senha_de_app"</span> <span class="text-gray-400"># Use uma senha de aplicativo do Google</span>
+receiver_email = <span class="text-green-300">"destinatario@exemplo.com"</span>
+
+<span class="text-gray-400"># Cria a mensagem</span>
+message = MIMEText(<span class="text-green-300">f"Seu código de verificação é: {otp_code}"</span>)
+message[<span class="text-green-300">'Subject'</span>] = <span class="text-green-300">'Seu Código de Verificação'</span>
+message[<span class="text-green-300">'From'</span>] = sender_email
+message[<span class="text-green-300">'To'</span>] = receiver_email
+
+<span class="text-gray-400"># Cria um contexto SSL seguro</span>
+context = ssl.create_default_context()
+
+<span class="text-purple-400">try</span>:
+    <span class="text-purple-400">with</span> smtplib.SMTP(smtp_server, port) <span class="text-purple-400">as</span> server:
+        server.starttls(context=context)
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.as_string())
+        print(<span class="text-green-300">"E-mail OTP enviado com sucesso!"</span>)
+<span class="text-purple-400">except</span> Exception <span class="text-purple-400">as</span> e:
+    print(<span class="text-green-300">f"Erro ao enviar e-mail: {e}"</span>)
+</pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-8">
+        <div class="container mx-auto px-6">
+            <p class="mb-2">A segurança mais robusta é alcançada através de uma abordagem em camadas, combinando diferentes fatores e métodos.</p>
+            <p class="text-sm text-gray-400">Análise interativa baseada em pesquisa científica sobre métodos de autenticação.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // --- Tabs Logic ---
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Deactivate all buttons and hide all panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.add('hidden'));
+
+            // Activate clicked button and show target pane
+            button.classList.add('active');
+            const targetPane = document.getElementById(button.dataset.target + '-content');
+            if (targetPane) {
+                targetPane.classList.remove('hidden');
+            }
+        });
+    });
+    // Set initial active tab
+    if (tabButtons.length > 0) {
+        tabButtons[0].click();
+    }
+    
+    // --- Code Viewer Logic ---
+    const codeButtons = document.querySelectorAll('.code-button');
+    const codePanes = document.querySelectorAll('.code-pane');
+
+    codeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            codeButtons.forEach(btn => btn.classList.remove('active'));
+            codePanes.forEach(pane => pane.classList.add('hidden'));
+            
+            button.classList.add('active');
+            const targetPane = document.getElementById(button.dataset.code + '-code');
+            if(targetPane) {
+                targetPane.classList.remove('hidden');
+            }
+        });
+    });
+    // Set initial active code
+     if (codeButtons.length > 0) {
+        codeButtons[0].click();
+    }
+
+
+    // --- Chart.js Logic ---
+    const ctx = document.getElementById('securityChart').getContext('2d');
+    const chartData = {
+        labels: ['Resist. a Interceptação', 'Resist. a Phishing', 'Indep. de Terceiros', 'Impacto do Roubo', 'Conveniência'],
+        datasets: [
+            {
+                label: 'TOTP',
+                data: [9, 4, 8, 7, 6], // Scores out of 10
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                pointBackgroundColor: '#3b82f6',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#3b82f6',
+                hidden: false,
+            },
+            {
+                label: 'SMS',
+                data: [3, 3, 2, 5, 9],
+                borderColor: '#16a34a',
+                backgroundColor: 'rgba(22, 163, 74, 0.2)',
+                pointBackgroundColor: '#16a34a',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#16a34a',
+                hidden: false,
+            },
+            {
+                label: 'E-mail',
+                data: [2, 2, 4, 6, 8],
+                borderColor: '#9333ea',
+                backgroundColor: 'rgba(147, 51, 234, 0.2)',
+                pointBackgroundColor: '#9333ea',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#9333ea',
+                hidden: false,
+            },
+            {
+                label: 'Biometria',
+                data: [10, 8, 10, 9, 8],
+                borderColor: '#dc2626',
+                backgroundColor: 'rgba(220, 38, 38, 0.2)',
+                pointBackgroundColor: '#dc2626',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#dc2626',
+                hidden: false,
+            }
+        ]
+    };
+
+    const securityChart = new Chart(ctx, {
+        type: 'radar',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                    grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                    pointLabels: {
+                        font: {
+                            size: 14,
+                        },
+                        color: '#4b5563' // text-gray-600
+                    },
+                    ticks: {
+                        backdropColor: 'rgba(255, 255, 255, 0.75)',
+                        stepSize: 2,
+                        color: '#6b7280', // text-gray-500
+                    },
+                    min: 0,
+                    max: 10
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                     labels: {
+                        font: { size: 14 },
+                        color: '#1f2937' // text-gray-800
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.r !== null) {
+                                label += context.parsed.r + '/10';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Checkbox logic to show/hide datasets
+    const checkboxes = document.querySelectorAll('.form-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const method = checkbox.dataset.method;
+            const isChecked = checkbox.checked;
+            
+            const datasetIndex = securityChart.data.datasets.findIndex(ds => ds.label.toLowerCase() === method);
+            
+            if (datasetIndex !== -1) {
+                securityChart.setDatasetVisibility(datasetIndex, isChecked);
+                securityChart.update();
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
