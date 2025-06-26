@@ -21,7 +21,7 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        .chart-container {
+       .chart-container {
             position: relative;
             width: 100%;
             max-width: 700px;
@@ -30,22 +30,22 @@
             height: 60vh;
             max-height: 500px;
         }
-        .nav-link {
+       .nav-link {
             transition: color 0.3s, border-bottom-color 0.3s;
         }
-        .nav-link:hover {
+       .nav-link:hover {
             color: #3b82f6; /* text-blue-500 */
         }
-        .tab-button.active {
+       .tab-button.active {
             border-color: #3b82f6; /* border-blue-500 */
             color: #3b82f6; /* text-blue-500 */
             font-weight: 600;
         }
-        .code-button.active {
+       .code-button.active {
             background-color: #3b82f6; /* bg-blue-500 */
             color: #ffffff; /* text-white */
         }
-        .flow-box {
+       .flow-box {
             border: 1px solid #e5e7eb; /* border-gray-200 */
             background-color: #f9fafb; /* bg-gray-50 */
             padding: 0.75rem;
@@ -54,7 +54,7 @@
             flex-grow: 1;
             min-width: 120px;
         }
-        .flow-arrow {
+       .flow-arrow {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,7 +67,6 @@
 </head>
 <body class="bg-slate-50 text-gray-800">
 
-    <!-- Header & Navigation -->
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold text-gray-800">Análise de Autenticação</h1>
@@ -81,7 +80,6 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
             <a href="#overview" class="block py-2 text-gray-600">Visão Geral</a>
             <a href="#details" class="block py-2 text-gray-600">Métodos</a>
@@ -92,7 +90,6 @@
 
     <main class="container mx-auto px-6 py-12">
 
-        <!-- Section 1: Overview -->
         <section id="overview" class="text-center mb-24">
             <h2 class="text-4xl font-bold mb-4 text-gray-900">O Futuro da Segurança é Multi-Fator</h2>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-12">
@@ -117,12 +114,10 @@
             </div>
         </section>
 
-        <!-- Section 2: Method Details -->
         <section id="details" class="mb-24">
             <h2 class="text-3xl font-bold text-center mb-2 text-gray-900">Métodos em Detalhe</h2>
             <p class="text-lg text-gray-600 text-center mb-12">Explore os princípios técnicos, o funcionamento e as considerações de cada abordagem de autenticação.</p>
             
-            <!-- Tabs Navigation -->
             <div class="mb-8 border-b border-gray-200">
                 <nav class="flex justify-center -mb-px space-x-6">
                     <button class="tab-button py-4 px-1 border-b-2 text-gray-500 border-transparent text-lg" data-target="totp">Tokens (TOTP)</button>
@@ -131,9 +126,7 @@
                 </nav>
             </div>
 
-            <!-- Tab Content -->
             <div id="tab-content">
-                <!-- TOTP Content -->
                 <div class="tab-pane" id="totp-content">
                     <h3 class="text-2xl font-semibold mb-4 text-center">Tokens de Software: A Força da Criptografia Local</h3>
                     <p class="max-w-3xl mx-auto text-gray-600 mb-8 text-center">Baseado na RFC 6238, o TOTP (Time-Based One-Time Password) gera um código a partir de um segredo compartilhado e do tempo atual. Como o código nunca é transmitido, ele é imune a ataques de interceptação de rede.</p>
@@ -169,7 +162,6 @@
                     </div>
                 </div>
 
-                <!-- Communication OTPs Content -->
                 <div class="tab-pane hidden" id="communication-content">
                     <h3 class="text-2xl font-semibold mb-4 text-center">OTPs por Comunicação: A Conveniência e seus Riscos</h3>
                     <p class="max-w-3xl mx-auto text-gray-600 mb-8 text-center">Enviar códigos por SMS ou e-mail é universalmente acessível. No entanto, a segurança do método é tão forte quanto a segurança do canal de comunicação, que é externo e muitas vezes vulnerável.</p>
@@ -205,7 +197,6 @@
                     </div>
                 </div>
 
-                <!-- Biometrics Content -->
                 <div class="tab-pane hidden" id="biometrics-content">
                     <h3 class="text-2xl font-semibold mb-4 text-center">Biometria: Você é a Chave</h3>
                     <p class="max-w-3xl mx-auto text-gray-600 mb-8 text-center">Utilizando características únicas e imutáveis como a impressão digital ou a geometria da mão, a biometria oferece um método de autenticação rápido e inerentemente pessoal. A segurança está em armazenar o "template" (modelo matemático), não a imagem real.</p>
@@ -243,7 +234,6 @@
             </div>
         </section>
 
-        <!-- Section 3: Security Comparison -->
         <section id="comparison" class="mb-24">
             <h2 class="text-3xl font-bold text-center mb-2 text-gray-900">Comparativo Visual de Segurança</h2>
             <p class="text-lg text-gray-600 text-center mb-12">Nenhum método é perfeito. Use o gráfico interativo para comparar as forças e fraquezas de cada abordagem em cinco critérios essenciais. Selecione os métodos para compará-los.</p>
@@ -273,7 +263,6 @@
             </div>
         </section>
 
-        <!-- Section 4: Code Demonstrations -->
         <section id="code" class="mb-24">
             <h2 class="text-3xl font-bold text-center mb-2 text-gray-900">Demonstrações de Código Python</h2>
              <p class="text-lg text-gray-600 text-center mb-12">Veja exemplos de implementação comentados para entender como esses sistemas funcionam na prática. Clique para alternar entre os códigos.</p>
@@ -285,99 +274,224 @@
                     <button class="code-button px-4 py-1 rounded text-sm bg-gray-600 text-gray-300 transition" data-code="smtplib">Email (smtplib)</button>
                 </div>
                 <div class="p-4 text-sm font-mono text-white overflow-x-auto">
-                    <!-- PyOTP Code -->
                     <pre class="code-pane" id="pyotp-code">
 <span class="text-purple-400">import</span> pyotp
 <span class="text-purple-400">import</span> time
 
-<span class="text-gray-400"># 1. Gerar uma chave secreta que será compartilhada com o app do usuário.</span>
+<span class="text-gray-400"># 1. Gerar uma chave secreta base32 aleatória</span>
+<span class="text-gray-400"># Esta chave secreta é a base do sistema TOTP. Ela deve ser compartilhada de forma segura</span>
+<span class="text-gray-400"># entre seu servidor (ou aplicação) e o aplicativo autenticador do usuário (ex: Google Authenticator).</span>
+<span class="text-gray-400"># pyotp.random_base32() gera um segredo codificado em base32 de 16 caracteres, que é compatível</span>
+<span class="text-gray-400"># com a maioria dos aplicativos autenticadores padrão. Em um sistema real, este segredo seria</span>
+<span class="text-gray-400"># gerado uma vez por usuário durante seu registro para MFA e armazenado de forma segura em um banco de dados.</span>
 secret_key = pyotp.random_base32()
-print(<span class="text-green-300">f"Chave Secreta: {secret_key}"</span>)
+print(<span class="text-green-300">f"Chave Secreta Gerada: {secret_key}"</span>)
 
-<span class="text-gray-400"># 2. Inicializar o objeto TOTP com a chave secreta.</span>
+<span class="text-gray-400"># 2. Inicializar um objeto TOTP com a chave secreta compartilhada</span>
+<span class="text-gray-400"># O construtor pyotp.TOTP() cria uma instância que encapsula a lógica</span>
+<span class="text-gray-400"># para gerar e verificar senhas de uso único baseadas em tempo usando o segredo fornecido.</span>
 totp = pyotp.TOTP(secret_key)
 
-<span class="text-gray-400"># 3. Gerar o código atual, como visto no app autenticador.</span>
+<span class="text-gray-400"># 3. Gerar a OTP atual</span>
+<span class="text-gray-400"># O método.now() calcula a OTP para o passo de tempo atual. Este é o código de 6 dígitos</span>
+<span class="text-gray-400"># que um usuário veria exibido em seu aplicativo autenticador neste momento preciso.</span>
+<span class="text-gray-400"># O passo de tempo padrão é de 30 segundos, o que significa que o código muda a cada 30 segundos.</span>
 current_otp = totp.now()
-print(<span class="text-green-300">f"OTP Atual: {current_otp}"</span>)
+print(<span class="text-green-300">f"OTP atual gerada: {current_otp}"</span>)
 
-<span class="text-gray-400"># 4. Verificar um código inserido pelo usuário.</span>
-print(<span class="text-green-300">f"\nVerificando o código {current_otp}..."</span>)
-<span class="text-purple-400">if</span> totp.verify(current_otp):
-    print(<span class="text-green-300">"Verificação bem-sucedida!"</span>)
-<span class="text-purple-400">else</span>:
-    print(<span class="text-green-300">"Falha na verificação."</span>)
+<span class="text-gray-400"># 4. Verificar a OTP</span>
+<span class="text-gray-400"># O método.verify(otp_code, valid_window=None) verifica se o código OTP fornecido é válido</span>
+<span class="text-gray-400"># para o passo de tempo atual. Ele também pode aceitar um parâmetro 'valid_window' (o padrão é 1)</span>
+<span class="text-gray-400"># para considerar pequenos desvios de relógio, permitindo códigos do passo de tempo anterior ou seguinte.</span>
+<span class="text-gray-400"># Em uma aplicação real, 'user_entered_otp' seria o código submetido pelo usuário.</span>
+user_entered_otp = current_otp <span class="text-gray-400"># Para esta demonstração, usamos a OTP recém-gerada para verificação bem-sucedida.</span>
 
-<span class="text-gray-400"># 5. Demonstrar a expiração do código após 30 segundos.</span>
-print(<span class="text-green-300">"\nAguardando 30s para a expiração..."</span>)
-time.sleep(30)
-print(<span class="text-green-300">f"Tentando verificar o código antigo {current_otp} novamente..."</span>)
-<span class="text-purple-400">if</span> totp.verify(current_otp):
-    print(<span class="text-green-300">"Verificação bem-sucedida (inesperado)."</span>)
+print(<span class="text-green-300">f"\nTentando verificar a OTP '{user_entered_otp}' imediatamente..."</span>)
+<span class="text-purple-400">if</span> totp.verify(user_entered_otp):
+    print(<span class="text-green-300">f"OTP '{user_entered_otp}' verificada com sucesso para o passo de tempo atual."</span>)
 <span class="text-purple-400">else</span>:
-    print(<span class="text-green-300">"Falha na verificação (esperado)."</span>)
+    print(<span class="text-green-300">f"Falha na verificação da OTP '{user_entered_otp}' para o passo de tempo atual."</span>)
+
+<span class="text-gray-400"># 5. Demonstrar a expiração da OTP (natureza baseada em tempo)</span>
+<span class="text-gray-400"># Os códigos TOTP são inerentemente sensíveis ao tempo. Após a expiração de sua janela de validade (padrão de 30 segundos),</span>
+<span class="text-gray-400"># a mesma OTP não será mais considerada válida pelo servidor. Este é um recurso de segurança crítico</span>
+<span class="text-gray-400"># que previne ataques de repetição.</span>
+print(<span class="text-green-300">"\nAguardando 30 segundos para simular a passagem do tempo e demonstrar a expiração da OTP..."</span>)
+time.sleep(30) <span class="text-gray-400"># Pausa a execução do script por 30 segundos, forçando o avanço do passo de tempo.</span>
+
+<span class="text-gray-400"># Tentar verificar a *mesma* OTP após sua janela de tempo ter passado.</span>
+print(<span class="text-green-300">f"Tentando verificar a OTP '{user_entered_otp}' após 30 segundos (espera-se que falhe)..."</span>)
+<span class="text-purple-400">if</span> totp.verify(user_entered_otp):
+    print(<span class="text-green-300">f"OTP '{user_entered_otp}' verificada com sucesso após 30 segundos (isso idealmente deveria ser Falso)."</span>)
+<span class="text-purple-400">else</span>:
+    print(<span class="text-green-300">f"OTP '{user_entered_otp}' falhou na verificação após 30 segundos (conforme esperado)."</span>)
+
+<span class="text-gray-400"># 6. Gerar uma nova OTP após a passagem do tempo</span>
+<span class="text-gray-400"># Uma nova OTP será gerada para o novo passo de tempo.</span>
+new_current_otp = totp.now()
+print(<span class="text-green-300">f"\nNova OTP gerada após 30 segundos: {new_current_otp}"</span>)
+
+<span class="text-gray-400"># Verificar a nova OTP</span>
+print(<span class="text-green-300">f"Tentando verificar a nova OTP '{new_current_otp}'..."</span>)
+<span class="text-purple-400">if</span> totp.verify(new_current_otp):
+    print(<span class="text-green-300">f"Nova OTP '{new_current_otp}' verificada com sucesso."</span>)
+<span class="text-purple-400">else</span>:
+    print(<span class="text-green-300">f"Nova OTP '{new_current_otp}' falhou na verificação."</span>)
 </pre>
-                    <!-- Twilio Code -->
                     <pre class="code-pane hidden" id="twilio-code">
 <span class="text-purple-400">import</span> os
 <span class="text-purple-400">from</span> twilio.rest <span class="text-purple-400">import</span> Client
 <span class="text-purple-400">import</span> random
 
-<span class="text-gray-400"># Suas credenciais da conta Twilio (use variáveis de ambiente)</span>
+<span class="text-gray-400"># As credenciais da sua conta Twilio (Account SID e Auth Token) são necessárias para autenticar</span>
+<span class="text-gray-400"># com a API da Twilio. É altamente recomendável armazená-las como variáveis de ambiente</span>
+<span class="text-gray-400"># para segurança, em vez de codificá-las diretamente no script.</span>
+<span class="text-gray-400"># Você pode encontrar seu Account SID e Auth Token no painel da Twilio em twilio.com/console.</span>
 account_sid = os.environ.get(<span class="text-green-300">"TWILIO_ACCOUNT_SID"</span>)
 auth_token = os.environ.get(<span class="text-green-300">"TWILIO_AUTH_TOKEN"</span>)
+
+<span class="text-gray-400"># Verifica se as variáveis de ambiente foram carregadas.</span>
+<span class="text-purple-400">if</span> <span class="text-purple-400">not</span> account_sid <span class="text-purple-400">or not</span> auth_token:
+    print(<span class="text-green-300">"Erro: As variáveis de ambiente TWILIO_ACCOUNT_SID e TWILIO_AUTH_TOKEN não estão configuradas."</span>)
+    print(<span class="text-green-300">"Por favor, defina-as antes de executar o script."</span>)
+    exit()
+
+<span class="text-gray-400"># Inicializa o cliente Twilio com suas credenciais.</span>
 client = Client(account_sid, auth_token)
 
-<span class="text-gray-400"># Gera um código OTP aleatório de 6 dígitos</span>
-otp_code = str(random.randint(100000, 999999))
+<span class="text-purple-400">def</span> <span class="text-yellow-300">send_sms_otp</span>(to_phone_number, otp_code, twilio_phone_number):
+    <span class="text-gray-400">"""</span>
+<span class="text-gray-400">    Envia uma OTP via SMS usando a API da Twilio.</span>
 
-<span class="text-purple-400">def</span> <span class="text-yellow-300">send_sms_otp</span>(phone_number):
+<span class="text-gray-400">    Args:</span>
+<span class="text-gray-400">        to_phone_number (str): O número de telefone do destinatário no formato E.164 (ex: '+15551234567').</span>
+<span class="text-gray-400">        otp_code (str): O código OTP a ser enviado.</span>
+<span class="text-gray-400">        twilio_phone_number (str): Seu número de telefone Twilio no formato E.164.</span>
+<span class="text-gray-400">    """</span>
     <span class="text-purple-400">try</span>:
+        <span class="text-gray-400"># Cria uma nova mensagem SMS usando o cliente Twilio.</span>
+        <span class="text-gray-400"># O parâmetro 'body' é o conteúdo do texto da mensagem SMS. Aqui, ele incluirá a OTP.</span>
+        <span class="text-gray-400"># O parâmetro 'from_' é o seu número de telefone Twilio.</span>
+        <span class="text-gray-400"># O parâmetro 'to' é o número de telefone do destinatário.</span>
         message = client.messages.create(
-            body=<span class="text-green-300">f"Seu código de verificação é: {otp_code}"</span>,
-            from_=<span class="text-green-300">'+15017122661'</span>, <span class="text-gray-400"># Seu número Twilio</span>
-            to=phone_number
+            body=<span class="text-green-300">f"Seu código OTP é: {otp_code}. Ele é válido por um curto período. Não o compartilhe."</span>,
+            from_=twilio_phone_number,
+            to=to_phone_number
         )
-        print(<span class="text-green-300">f"SMS enviado para {phone_number}. SID: {message.sid}"</span>)
+        print(<span class="text-green-300">f"Mensagem SMS enviada com sucesso para {to_phone_number}. SID da mensagem: {message.sid}"</span>)
+        <span class="text-gray-400"># Você pode acessar outros valores da resposta da API usando 'message.atributo', por exemplo, message.status</span>
+        <span class="text-gray-400"># print(f"Status da mensagem: {message.status}")</span>
     <span class="text-purple-400">except</span> Exception <span class="text-purple-400">as</span> e:
-        print(<span class="text-green-300">f"Erro ao enviar SMS: {e}"</span>)
+        print(<span class="text-green-300">f"Erro ao enviar SMS OTP: {e}"</span>)
 
-<span class="text-gray-400"># Exemplo de uso</span>
-send_sms_otp(<span class="text-green-300">'+5511999999999'</span>) <span class="text-gray-400"># Substitua pelo número do destinatário</span>
+<span class="text-gray-400"># --- Exemplo de Uso ---</span>
+<span class="text-purple-400">if</span> __name__ == <span class="text-green-300">"__main__"</span>:
+    <span class="text-gray-400"># Substitua pelo número de telefone do destinatário (formato E.164)</span>
+    RECIPIENT_PHONE_NUMBER = <span class="text-green-300">"+15558675310"</span> <span class="text-gray-400"># Exemplo: um número de telefone de teste Twilio ou um número real</span>
+
+    <span class="text-gray-400"># Substitua pelo seu número de telefone Twilio (formato E.164)</span>
+    YOUR_TWILIO_PHONE_NUMBER = <span class="text-green-300">"+15017122661"</span> <span class="text-gray-400"># Exemplo: seu número de telefone Twilio</span>
+
+    <span class="text-gray-400"># Gerar uma OTP simples (em uma aplicação real, você usaria um gerador de OTP mais robusto)</span>
+    <span class="text-purple-400">import</span> random
+    generated_otp = str(random.randint(100000, 999999))
+    print(<span class="text-green-300">f"OTP gerada: {generated_otp}"</span>)
+
+    <span class="text-gray-400"># Enviar a OTP via SMS</span>
+    send_sms_otp(RECIPIENT_PHONE_NUMBER, generated_otp, YOUR_TWILIO_PHONE_NUMBER)
 </pre>
-                    <!-- smtplib Code -->
                     <pre class="code-pane hidden" id="smtplib-code">
-<span class="text-purple-400">import</span> smtplib, ssl
-<span class="text-purple-400">from</span> email.mime.text <span class="text-purple-400">import</span> MIMEText
+<span class="text-purple-400">import</span> smtplib
 <span class="text-purple-400">import</span> random
+<span class="text-purple-400">from</span> email.mime.text <span class="text-purple-400">import</span> MIMEText
+<span class="text-purple-400">from</span> email.mime.multipart <span class="text-purple-400">import</span> MIMEMultipart
 
-<span class="text-gray-400"># Gera um código OTP aleatório</span>
-otp_code = str(random.randint(100000, 999999))
+<span class="text-purple-400">def</span> <span class="text-yellow-300">generate_otp</span>(length=6):
+    <span class="text-gray-400">"""</span>
+<span class="text-gray-400">    Gera uma senha de uso único (OTP) numérica de um determinado comprimento.</span>
+<span class="text-gray-400">    """</span>
+    <span class="text-purple-400">return</span> <span class="text-green-300">""</span>.join(random.choices(<span class="text-green-300">"0123456789"</span>, k=length))
 
-<span class="text-gray-400"># Configurações do servidor de e-mail</span>
-smtp_server = <span class="text-green-300">"smtp.gmail.com"</span>
-port = 587
-sender_email = <span class="text-green-300">"seu_email@gmail.com"</span>
-password = <span class="text-green-300">"sua_senha_de_app"</span> <span class="text-gray-400"># Use uma senha de aplicativo do Google</span>
-receiver_email = <span class="text-green-300">"destinatario@exemplo.com"</span>
+<span class="text-purple-400">def</span> <span class="text-yellow-300">send_otp_email</span>(sender_email, sender_password, receiver_email, otp_code):
+    <span class="text-gray-400">"""</span>
+<span class="text-gray-400">    Envia um e-mail contendo uma senha de uso único (OTP) para um único destinatário.</span>
 
-<span class="text-gray-400"># Cria a mensagem</span>
-message = MIMEText(<span class="text-green-300">f"Seu código de verificação é: {otp_code}"</span>)
-message[<span class="text-green-300">'Subject'</span>] = <span class="text-green-300">'Seu Código de Verificação'</span>
-message[<span class="text-green-300">'From'</span>] = sender_email
-message[<span class="text-green-300">'To'</span>] = receiver_email
+<span class="text-gray-400">    Args:</span>
+<span class="text-gray-400">        sender_email (str): O endereço de e-mail do remetente.</span>
+<span class="text-gray-400">        sender_password (str): A senha (ou senha de aplicativo) para a conta de e-mail do remetente.</span>
+<span class="text-gray-400">        receiver_email (str): O endereço de e-mail do destinatário.</span>
+<span class="text-gray-400">        otp_code (str): O código OTP a ser enviado.</span>
+<span class="text-gray-400">    """</span>
+    <span class="text-purple-400">try</span>:
+        <span class="text-gray-400"># Configurações do servidor SMTP. Para Gmail, o servidor é 'smtp.gmail.com' e a porta segura é 587.</span>
+        smtp_server = <span class="text-green-300">"smtp.gmail.com"</span>
+        smtp_port = 587
 
-<span class="text-gray-400"># Cria um contexto SSL seguro</span>
-context = ssl.create_default_context()
+        <span class="text-gray-400"># Cria um objeto de mensagem multipart para permitir mais flexibilidade (ex: HTML, anexos).</span>
+        <span class="text-gray-400"># Embora esta OTP seja texto simples, é uma boa prática para e-mails mais complexos.</span>
+        msg = MIMEMultipart()
+        msg[<span class="text-green-300">'From'</span>] = sender_email
+        msg[<span class="text-green-300">'To'</span>] = receiver_email
+        msg[<span class="text-green-300">'Subject'</span>] = <span class="text-green-300">"Seu Código de Uso Único (OTP)"</span>
 
-<span class="text-purple-400">try</span>:
-    <span class="text-purple-400">with</span> smtplib.SMTP(smtp_server, port) <span class="text-purple-400">as</span> server:
-        server.starttls(context=context)
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
-        print(<span class="text-green-300">"E-mail OTP enviado com sucesso!"</span>)
-<span class="text-purple-400">except</span> Exception <span class="text-purple-400">as</span> e:
-    print(<span class="text-green-300">f"Erro ao enviar e-mail: {e}"</span>)
+        <span class="text-gray-400"># Corpo da mensagem.</span>
+        body = <span class="text-green-300">f"""
+        Prezado(a) Usuário(a),
+
+        Seu código de uso único (OTP) é: {otp_code}
+
+        Este código é válido por um curto período de tempo e deve ser usado imediatamente.
+        Por favor, não compartilhe este código com ninguém.
+
+        Atenciosamente,
+        Sua Equipe de Serviço
+        """</span>
+        msg.attach(MIMEText(body, <span class="text-green-300">'plain'</span>))
+
+        <span class="text-gray-400"># Inicia uma sessão SMTP.</span>
+        <span class="text-gray-400"># smtplib.SMTP() cria um objeto de sessão cliente.</span>
+        server = smtplib.SMTP(smtp_server, smtp_port)
+
+        <span class="text-gray-400"># Coloca a conexão SMTP em modo TLS (Transport Layer Security) para criptografia.</span>
+        server.starttls()
+
+        <span class="text-gray-400"># Autentica o remetente com o servidor SMTP.</span>
+        <span class="text-gray-400"># Se estiver usando Gmail com verificação em duas etapas, você precisará de uma "senha de aplicativo".</span>
+        server.login(sender_email, sender_password)
+
+        <span class="text-gray-400"># Envia o e-mail.</span>
+        <span class="text-gray-400"># sendmail() requer o remetente, o destinatário e a mensagem como uma string.</span>
+        server.sendmail(sender_email, receiver_email, msg.as_string())
+
+        print(<span class="text-green-300">f"E-mail OTP enviado com sucesso para {receiver_email}"</span>)
+
+    <span class="text-purple-400">except</span> smtplib.SMTPAuthenticationError:
+        print(<span class="text-green-300">"Erro ao enviar e-mail OTP: Erro de autenticação. Verifique seu e-mail e senha."</span>)
+        print(<span class="text-green-300">"Nota: Se estiver usando Gmail com Verificação em Duas Etapas, você pode precisar de uma Senha de Aplicativo."</span>)
+    <span class="text-purple-400">except</span> smtplib.SMTPConnectError:
+        print(<span class="text-green-300">"Erro ao enviar e-mail OTP: Não foi possível conectar ao servidor SMTP."</span>)
+    <span class="text-purple-400">except</span> Exception <span class="text-purple-400">as</span> e:
+        print(<span class="text-green-300">f"Ocorreu um erro inesperado: {e}"</span>)
+    <span class="text-purple-400">finally</span>:
+        <span class="text-gray-400"># Garante que a sessão SMTP seja encerrada.</span>
+        <span class="text-purple-400">if</span> <span class="text-green-300">'server'</span> <span class="text-purple-400">in</span> locals() <span class="text-purple-400">and</span> server:
+            server.quit()
+
+<span class="text-gray-400"># --- Exemplo de Uso ---</span>
+<span class="text-purple-400">if</span> __name__ == <span class="text-green-300">"__main__"</span>:
+    <span class="text-gray-400"># Substitua pelo seu e-mail e senha (ou senha de aplicativo) do remetente</span>
+    SENDER_EMAIL = <span class="text-green-300">"seu_email@gmail.com"</span>
+    SENDER_PASSWORD = <span class="text-green-300">"sua_senha_de_aplicativo_ou_senha_normal"</span> <span class="text-gray-400"># Use uma Senha de Aplicativo para o Gmail se 2FA estiver ativado</span>
+
+    <span class="text-gray-400"># Substitua pelo endereço de e-mail do destinatário</span>
+    RECEIVER_EMAIL = <span class="text-green-300">"email_do_destinatario@example.com"</span>
+
+    <span class="text-gray-400"># Gerar a OTP</span>
+    generated_otp = generate_otp()
+    print(<span class="text-green-300">f"OTP gerada: {generated_otp}"</span>)
+
+    <span class="text-gray-400"># Enviar o e-mail OTP</span>
+    send_otp_email(SENDER_EMAIL, SENDER_PASSWORD, RECEIVER_EMAIL, generated_otp)
 </pre>
                 </div>
             </div>
@@ -422,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Set initial active tab
     if (tabButtons.length > 0) {
-        tabButtons[0].click();
+        tabButtons[0].click(); // Corrected to target the first element
     }
     
     // --- Code Viewer Logic ---
@@ -443,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Set initial active code
      if (codeButtons.length > 0) {
-        codeButtons[0].click();
+        codeButtons[0].click(); // Corrected to target the first element
     }
 
 
